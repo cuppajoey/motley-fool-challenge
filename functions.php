@@ -35,7 +35,7 @@ function mfsa_register_post_types() {
         'public' => true,
         'publicly_queryable' => true,
         'show_in_rest' => true,
-        'rewrite' => array( 'slug' => 'Stocks' ),
+        'rewrite' => array( 'slug' => 'stocks' ),
         'capability_type' => 'post',
         'menu_position' => 5,
         'menu_icon' => 'dashicons-saved',
@@ -44,7 +44,23 @@ function mfsa_register_post_types() {
         'taxonomies' => array('category'),
         'has_archive' => true
     );
-    register_post_type( 'Stocks', $args );
+    register_post_type( 'stocks', $args );
 
 }
 add_action( 'init', 'mfsa_register_post_types' );
+
+/**
+ * Include Stock Recommendations post type in main query on homepage
+ * This allows CPTs to share template files (index, single, etc) with main posts
+ *
+ * @since 1.0.0
+ */
+function mfsa_include_stock_cpt_on_homepage( $query ) {
+    if ( ! is_admin() && $query->is_main_query() ) {
+        // if ( $query->is_home() ) {
+            $query->set( 'post_type', array( 'post', 'stocks' ) );
+        // }
+    }
+    return $query;
+}
+add_action( 'pre_get_posts', 'mfsa_include_stock_cpt_on_homepage' );
