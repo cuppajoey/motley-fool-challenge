@@ -6,7 +6,7 @@
 
             <?php while ( have_posts() ) : the_post(); ?>
 
-                <article>
+                <article <?php post_class(); ?>>
                     <h1><?php the_title(); ?></h2>
                     <span class=""><?php echo get_the_author(); ?></span>
                     <span class=""><?php echo get_the_date();?></span>
