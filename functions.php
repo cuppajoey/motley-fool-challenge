@@ -65,3 +65,16 @@ function mfsa_include_stock_cpt_on_homepage( $query ) {
     return $query;
 }
 add_action( 'pre_get_posts', 'mfsa_include_stock_cpt_on_homepage' );
+
+
+
+/**
+ * Register Menus
+ *
+ * @since 1.0.0
+ */
+register_nav_menus(
+    array(
+      'main-menu' => __( 'Main Menu' ),
+    )
+  );

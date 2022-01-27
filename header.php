@@ -11,6 +11,19 @@
     </head>
     <body <?php body_class(); ?>>
         <header>
-            <?php echo bloginfo('name'); ?>
+            <div class="site-branding">
+                <img src="<?php echo get_template_directory_uri() . "/assets/img/motley-fool-sa-logo.png"?>" alt="Stock Advisor Logo by Motley Fool">
+            </div>
+            <?php
+                wp_nav_menu(
+                    array(
+                        'theme_location' => 'primary-nav',
+                        'container' => 'nav',
+                        'container_id' => 'primary-nav',
+                        'container_class' => '',
+                        'menu_class' => 'secondary-menu'
+                    )
+                );
+            ?>
         </header>
     
