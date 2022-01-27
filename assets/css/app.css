@@ -1,6 +1,7 @@
 /*
- * CSS Reset by Josh Comeau
- * 
+ * CSS Reset by Josh Comeau 
+ *
+ * More info: https://www.joshwcomeau.com/css/custom-css-reset/
  */
 
 *, *::before, *::after {
@@ -31,4 +32,75 @@ input, button, textarea, select {
 
 p, h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word;
+}
+
+
+/* Typography */
+html, .root {
+    font-size: 16px;
+    line-height: 24px;
+}
+body {
+    font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
+h1, .heading-size-1 {
+    font-size: 3.0625em;
+    line-height: 1.23076923em;
+    margin-top: 0.48979592em;
+    margin-bottom: 0.48979592em;
+}
+h2, .heading-size-2 {
+    font-size: 2.4375em;
+    line-height: 1.23076923em;
+    margin-top: 1.23076924em;
+    margin-bottom: 0.61538462em;
+}
+h3, .heading-size-3 {
+    font-size: 1.9375em;
+    line-height: 1.5483871em;
+    margin-top: 0.77419355em;
+    margin-bottom: 0em;
+}
+h4, .heading-size-4 {
+    font-size: 1.5625em;
+    line-height: 1.92em;
+    margin-top: 0.96em;
+    margin-bottom: 0em;
+}
+h5, .heading-size-5 {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    margin-top: 1.2em;
+    margin-bottom: 0em;
+}
+p, ul, ol, pre, table, blockquote {
+    margin-top: 0em;
+    margin-bottom: 1.5em;
+}
+ul ul, ol ol, ul ol, ol ul {
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+/* Let's make sure all's aligned */
+hr, .hr {
+    border: 1px solid;
+    margin: -1px 0;
+}
+a, b, i, strong, em, small, code {
+    line-height: 0;
+}
+sub, sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+sup {
+    top: -0.5em;
+}
+sub {
+    bottom: -0.25em;
 }
