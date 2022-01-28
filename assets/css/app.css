@@ -37,8 +37,10 @@ p, h1, h2, h3, h4, h5, h6 {
 
 /* Site Color Scheme */
 :root {
-    --color-dark-blue: rgb(0,110,157);
-    --color-light-blue: rgb(1,125,167);
+    --color-dark-blue: rgb(0, 110, 157);
+    --color-light-blue: rgb(1, 125, 167);
+    --color-light-gray: #e4e4e4;
+    --color-gold: rgb(248, 177, 53)
 }
 
 /* Typography */
@@ -118,4 +120,50 @@ a {
     max-width: 850px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Display Classes */
+.d-inline {
+    display: inline;
+}
+.d-inline-block {
+    display: inline-block;
+}
+.d-block {
+    display: block;
+}
+.d-flex {
+    display: flex;
+}
+
+
+/* Company Details Page */
+.post-header {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+.post-header > img {
+    max-height: 64px;
+    width: auto;
+    margin-right: 1.5em;
+}
+
+.post-header > h1 {
+    margin-right: 2rem;
+}
+.post-header .ticker-tag {
+    margin-left: auto;
+}
+
+.ticker-tag {
+    background: var(--color-gold);
+    color: #000000;
+    border-radius: 0.5em;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 1;
 }
