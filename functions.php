@@ -20,6 +20,13 @@ function mfsa_theme_setup() {
 add_action( 'after_setup_theme', 'mfsa_theme_setup' );
 
 
+function mfsa_get_theme_info($request) {
+    $themeInfo = wp_get_theme();
+
+    return $themeInfo->display($request);
+}
+
+
 /**
  * Register Custom Post Types
  * 
