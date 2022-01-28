@@ -1,12 +1,15 @@
 <?php
 
-function mf_load_styles() {
+require('ticker-meta-box.php');
+
+
+function mfsa_load_styles() {
     wp_enqueue_style( 'mfsa-theme-css', get_template_directory_uri() . '/assets/css/app.css', array(), '1.0' );
     wp_register_script( 'load-exchange-company-data', get_template_directory_uri() . '/assets/js/app.js', array(), '1.0', true );
 
     wp_enqueue_script( 'load-exchange-company-data' );
 }
-add_action('wp_enqueue_scripts', 'mf_load_styles');
+add_action('wp_enqueue_scripts', 'mfsa_load_styles');
 
 
 function mfsa_theme_setup() {
