@@ -46,6 +46,35 @@ function mfsa_register_post_types() {
         'has_archive' => true
     );
     register_post_type( 'stocks', $args );
+    
+    // Company
+    $labels = array(
+        'name' => 'Companies',
+        'singular_name' => 'Company',
+        'add_new_item' => 'Add New Company',
+        'new_item' => 'New Company',
+        'edit_item' => 'Edit Company',
+        'view_item' => 'View Company',
+        'all_items' => 'All Companies',
+        'search_items' => 'Search Companies',
+        'not_found' => 'No Companies found.',
+        'not_found_in_trash' => 'No Companies found in Trash.'
+    );
+    $args = array(
+        'labels' => $labels,
+        'description' => 'Manage Company articles',
+        'public' => true,
+        'publicly_queryable' => true,
+        'show_in_rest' => true,
+        'capability_type' => 'post',
+        'menu_position' => 5,
+        'menu_icon' => 'dashicons-saved',
+        'exclude_from_search' => true,
+        'supports' => array('title', 'thumbnail', 'editor'),
+        'taxonomies' => array('category'),
+        'has_archive' => true
+    );
+    register_post_type( 'companies', $args );
 
 }
 add_action( 'init', 'mfsa_register_post_types' );
