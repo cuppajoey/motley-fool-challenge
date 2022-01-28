@@ -58,9 +58,9 @@ add_action( 'init', 'mfsa_register_post_types' );
  */
 function mfsa_include_stock_cpt_on_homepage( $query ) {
     if ( ! is_admin() && $query->is_main_query() ) {
-        // if ( $query->is_home() ) {
+        if ( $query->is_home() ) {
             $query->set( 'post_type', array( 'post', 'stocks' ) );
-        // }
+        }
     }
     return $query;
 }
