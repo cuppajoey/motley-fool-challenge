@@ -83,6 +83,62 @@
                             <span><?php echo $lastDiv ? number_format($lastDiv, 2, '.', ',') : "N/A"; ?></span>
                         </div>
                     </div>
+
+                    <?php 
+                        $recommendations = get_posts(array(
+                            'post_type' => 'stocks',
+                            'meta_query' => array(
+                                'relation' => 'AND',
+                                'symbol_clause' => array(
+                                    'key' => '_mfsa_symbol',
+                                    'value' => 'SBUX',
+                                    'compare' => '='
+                                )
+                            ),
+                        ));
+                    ?>
+
+                    <?php if ($recommendations) { ?>
+                        <h2>Recommendations</h2>
+                        <?php foreach ($recommendations as $post) { ?>
+                            <article>
+                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <div class="post-meta">
+                                    <span class="post-date"><?php echo get_the_date('l, M j, Y', $post->ID);?></span>
+                                    <span class="author"><?php echo get_the_author($post->ID); ?></span>
+                                </div>
+                                <p><?php the_excerpt(); ?></p>
+                            </article>
+                        <?php } ?>
+                    <?php } ?>
+                    
+                    <?php 
+                        $news = get_posts(array(
+                            'post_type' => 'post',
+                            'meta_query' => array(
+                                'relation' => 'AND',
+                                'symbol_clause' => array(
+                                    'key' => '_mfsa_symbol',
+                                    'value' => 'SBUX',
+                                    'compare' => '='
+                                )
+                            ),
+                        ));
+                    ?>
+
+                    <?php if ($news) { ?>
+                        <h2>Other Coverage</h2>
+                        <?php foreach ($news as $post) { ?>
+                            <article>
+                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <div class="post-meta">
+                                    <span class="post-date"><?php echo get_the_date('l, M j, Y', $post->ID);?></span>
+                                    <span class="author"><?php echo get_the_author($post->ID); ?></span>
+                                </div>
+                                <p><?php the_excerpt(); ?></p>
+                            </article>
+                        <?php } ?>
+                    <?php } ?>
                 </article>
 
             <?php endwhile; ?>
