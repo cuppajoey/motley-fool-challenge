@@ -114,4 +114,74 @@ register_nav_menus(
     array(
       'main-menu' => __( 'Main Menu' ),
     )
-  );
+);
+
+
+/**
+ * Get Company Financial Quote
+ * Data provided by call to https://financialmodelingprep.com/ API
+ *
+ * @since 1.0.0
+ */
+function mfsa_get_company_quote($companySymbol) {
+    set_time_limit(0);
+
+    $endpoint = "https://financialmodelingprep.com/api/v3/quote/{$companySymbol}?apikey=e2471ff0e15771593da05997639bf01d";
+
+    $channel = curl_init();
+
+    curl_setopt($channel, CURLOPT_AUTOREFERER, TRUE);
+    curl_setopt($channel, CURLOPT_HEADER, 0);
+    curl_setopt($channel, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($channel, CURLOPT_URL, $endpoint);
+    curl_setopt($channel, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($channel, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    curl_setopt($channel, CURLOPT_TIMEOUT, 0);
+    curl_setopt($channel, CURLOPT_CONNECTTIMEOUT, 0);
+    curl_setopt($channel, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($channel, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+    $output = curl_exec($channel);
+
+    if (curl_error($channel)) {
+        return 'error:' . curl_error($channel);
+    } else {
+        $jsonResults = json_decode($output);
+        return $jsonResults;
+    }
+}
+
+
+/**
+ * Get Company Key Stats
+ * Data provided by call to https://financialmodelingprep.com/ API
+ *
+ * @since 1.0.0
+ */
+function mfsa_get_company_stats($companySymbol) {
+    set_time_limit(0);
+
+    $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey=e2471ff0e15771593da05997639bf01d";
+
+    $channel = curl_init();
+
+    curl_setopt($channel, CURLOPT_AUTOREFERER, TRUE);
+    curl_setopt($channel, CURLOPT_HEADER, 0);
+    curl_setopt($channel, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($channel, CURLOPT_URL, $endpoint);
+    curl_setopt($channel, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($channel, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    curl_setopt($channel, CURLOPT_TIMEOUT, 0);
+    curl_setopt($channel, CURLOPT_CONNECTTIMEOUT, 0);
+    curl_setopt($channel, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($channel, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+    $output = curl_exec($channel);
+
+    if (curl_error($channel)) {
+        return 'error:' . curl_error($channel);
+    } else {
+        $jsonResults = json_decode($output);
+        return $jsonResults;
+    }
+}
