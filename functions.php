@@ -9,6 +9,14 @@ function mf_load_styles() {
 add_action('wp_enqueue_scripts', 'mf_load_styles');
 
 
+function mfsa_theme_setup() {
+    // Add required theme supports
+    add_theme_support( 'title-tag' );
+    add_theme_support( 'post-thumbnails' );
+}
+add_action( 'after_setup_theme', 'mfsa_theme_setup' );
+
+
 /**
  * Register Custom Post Types
  * 
