@@ -17,11 +17,10 @@
             <?php
                 wp_nav_menu(
                     array(
-                        'theme_location' => 'primary-nav',
+                        'theme_location' => 'main-menu',
                         'container' => 'nav',
                         'container_id' => 'primary-nav',
                         'container_class' => '',
-                        'menu_class' => 'secondary-menu'
                     )
                 );
             ?>
