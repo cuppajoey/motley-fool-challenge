@@ -10,19 +10,21 @@
         <?php wp_head(); ?>
     </head>
     <body <?php body_class(); ?>>
-        <header>
-            <div class="site-branding">
-                <img src="<?php echo get_template_directory_uri() . "/assets/img/motley-fool-sa-logo.png"?>" alt="Stock Advisor Logo by Motley Fool">
-            </div>
-            <?php
-                wp_nav_menu(
+        <header class="site-header">
+            <div class="wrapper">
+                <div class="site-branding">
+                    <img src="<?php echo get_template_directory_uri() . "/assets/img/motley-fool-sa-logo.png"?>" alt="Stock Advisor Logo by Motley Fool">
+                </div>
+                <?php
+                    wp_nav_menu(
                     array(
                         'theme_location' => 'main-menu',
                         'container' => 'nav',
-                        'container_id' => 'primary-nav',
-                        'container_class' => '',
-                    )
-                );
-            ?>
+                        'container_id' => '',
+                        'container_class' => 'primary-nav',
+                        )
+                    );
+                ?>
+            </div>
         </header>
     
