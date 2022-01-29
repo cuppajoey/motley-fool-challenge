@@ -192,6 +192,10 @@ a {
 
 
 /* Company Details Page */
+article > header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-light-gray);
+}
 .post-header {
     display: flex;
     flex: 1;
