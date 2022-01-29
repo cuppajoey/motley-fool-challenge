@@ -191,11 +191,28 @@ a {
 }
 
 
-/* Company Details Page */
 article > header {
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--color-light-gray);
 }
+
+.post-title {
+    margin-bottom: 1rem;
+}
+.post-meta {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.post-meta > *:not(:last-child) {
+    margin-right: 1rem;
+    padding-right: 1rem;
+    border-right: 1px solid #e4e4e4;
+}
+
+/* Company Details Page */
 .post-header {
     display: flex;
     flex: 1;
