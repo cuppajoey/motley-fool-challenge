@@ -7,7 +7,10 @@
 :root {
     --color-dark-blue: rgb(0, 110, 157);
     --color-light-blue: rgb(1, 125, 167);
-    --color-light-gray: #e4e4e4;
+    --color-mid-gray: #e4e4e4;
+    --color-light-gray: #f8f8f8;
+    --color-black: #222222;
+    --color-white: #ffffff;
     --color-gold: rgb(248, 177, 53)
 }
 
@@ -17,6 +20,8 @@ html, .root {
     line-height: 24px;
 }
 body {
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
     font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
     font-size: 1em;
     line-height: 1.5em;
@@ -99,10 +104,11 @@ a {
 
 /* Site Header */
 .site-header {
-    border-bottom: 1px solid #e4e4e4;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-mid-gray);
     text-align: center;
+    margin-bottom: 3rem;
     padding: 1rem 0;
-    margin-bottom: 2rem;
 }
 .site-header .wrapper {
     display: flex;
@@ -131,15 +137,19 @@ a {
 
 /* Site Footer */
 .site-footer {
-    border-top: 1px solid #e4e4e4;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-mid-gray);
     padding: 2rem 0;
-    margin-top: 2rem;
+    margin-top: 3rem;
     text-align: center;
 }
 
 /* Single Article */
 #site-content {
-    max-width: 850px;
+    background-color: var(--color-white);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    max-width: 900px;
+    padding: 2rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -161,7 +171,7 @@ a {
 
 article > header {
     margin-bottom: 2rem;
-    border-bottom: 1px solid var(--color-light-gray);
+    border-bottom: 1px solid var(--color-mid-gray);
 }
 
 .post-title {
@@ -178,7 +188,7 @@ article > header {
 .post-meta > *:not(:last-child) {
     margin-right: 1rem;
     padding-right: 1rem;
-    border-right: 1px solid #e4e4e4;
+    border-right: 1px solid var(--color-mid-gray);
 }
 
 /* Company Details Page */
@@ -187,7 +197,7 @@ article > header {
     flex: 1;
     align-items: center;
     margin-bottom: 2rem;
-    border-bottom: 1px solid var(--color-light-gray);
+    border-bottom: 1px solid var(--color-mid-gray);
 }
 .post-header > img {
     max-height: 64px;
