@@ -28,6 +28,15 @@ function mfsa_get_theme_info($request) {
 }
 
 
+function mfsa_truncate_content( $content, $num_words = 30 ) {
+    $trimPost = preg_replace( '#\[[^\]]+\]#', '', $content );
+    $truncatedPost = wp_trim_words( $trimPost, $num_words, '...' );
+    $filteredPost = apply_filters( 'mq_filter_content', $truncatedPost );
+    
+    return $filteredPost;
+}
+
+
 /**
  * Register Custom Post Types
  * 

@@ -239,3 +239,36 @@ article > header {
 .table-cell:nth-child(even) {
     border-left: 1px solid #000;
 }
+
+/* Company Stats */
+.company-stats {
+    padding: 1.5rem 1rem;
+    border: 1px solid var(--color-mid-gray);
+}
+.stats-title {
+    display: flex;
+    align-items: center;
+}
+.stats-title > img {
+    max-width: 2rem;
+    margin-right: 1rem;
+}
+.stats-title > span {
+    margin: 0;
+}
+.stats-meta {
+    display: flex;
+    flex-direction: column;
+    padding-left: 3rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+}
+.stats-meta > span {
+    margin-right: 1rem;
+    text-transform: uppercase;
+}
+.stats-description {
+    padding-left: 3rem;
+    margin: 0.5rem 0 1rem;
+    font-size: 0.9rem;
+}
