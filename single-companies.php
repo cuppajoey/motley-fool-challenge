@@ -59,13 +59,13 @@
                     <?php if ($recommendations) { ?>
                         <h2>Recommendations</h2>
                         <?php foreach ($recommendations as $post) { ?>
-                            <article>
-                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                <div class="post-meta">
+                            <article class="post-component">
+                                <div class="post-component_meta post-meta">
                                     <span class="post-date"><?php echo get_the_date('l, M j, Y', $post->ID);?></span>
                                     <span class="author"><?php echo get_the_author($post->ID); ?></span>
                                 </div>
-                                <p><?php the_excerpt(); ?></p>
+                                <h3 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <?php the_excerpt(); ?>
                             </article>
                         <?php } ?>
                     <?php } ?>
@@ -87,13 +87,13 @@
                     <?php if ($news) { ?>
                         <h2>Other Coverage</h2>
                         <?php foreach ($news as $post) { ?>
-                            <article>
-                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                <div class="post-meta">
+                            <article class="post-component">
+                                <div class="post-component_meta post-meta">
                                     <span class="post-date"><?php echo get_the_date('l, M j, Y', $post->ID);?></span>
                                     <span class="author"><?php echo get_the_author($post->ID); ?></span>
                                 </div>
-                                <p><?php the_excerpt(); ?></p>
+                                <h3 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <?php the_excerpt(); ?>
                             </article>
                         <?php } ?>
                     <?php } ?>
