@@ -210,3 +210,57 @@ function mfsa_get_company_stats($companySymbol) {
         return $jsonResults;
     }
 }
+
+function mfsa_get_company_callout_box($postID) {
+    // Get the symbol assigned to post
+    $symbol = get_post_meta($postID, '_mfsa_symbol', true);
+    
+    // If symbol doesn't exist, bail out
+    if (! $symbol) return false;
+    
+    // Get company stats from API
+    $keyStats = mfsa_get_company_stats($symbol);
+
+    $logoURL = $keyStats[0]->image;
+    $companyName = $keyStats[0]->companyName;
+    $exchangeShortName = $keyStats[0]->exchangeShortName;
+    $description = $keyStats[0]->description;
+    $sector = $keyStats[0]->sector;
+    $website = $keyStats[0]->website;
+    
+    // Build our markup
+    $markup = '<aside class="company-stats">';
+        $markup .= '<div class="stats-title">';
+            $markup .= '<img src="' .$logoURL. '" />';
+            $markup .= '<span class="heading-size-5">' .$companyName. '</span>';
+        $markup .= '</div>';
+        $markup .= '<p class="stats-description">';
+            $markup .= mfsa_truncate_content($description);
+        $markup .= '</p>';
+        $markup .= '<div class="stats-meta">';
+            $markup .= '<span><strong>Exchange: </strong>' .$exchangeShortName. '</span>';
+            $markup .= '<span><strong>Industry: </strong>' .$sector. '</span>';
+            $markup .= '<span><strong>Website: </strong><a href="' .$website. '">' .$companyName. '</a></span>';
+        $markup .= '</div>';
+    $markup .= '</aside>';
+
+    return $markup;
+}
+
+function mfsa_inject_company_stats_into_post($postContent) {
+    if ( is_single() && get_post_type() === 'stocks' ) {
+        // Get the 2nd instance of a closing paragraph tag
+        $getPos = strpos($postContent, '</p>', strpos($postContent, '</p>') + 1);
+
+        // Get the callout box markup
+        $getCalloutMarkup = mfsa_get_company_callout_box( get_the_ID() );
+
+        // If our markup function fails, return content as normal
+        if (! $getCalloutMarkup ) return $postContent;
+
+        $newContent = substr_replace($postContent, $getCalloutMarkup, $getPos, 0);
+        $postContent = $newContent;
+    }
+    return $postContent;
+}
+add_filter( 'the_content', 'mfsa_inject_company_stats_into_post' );
