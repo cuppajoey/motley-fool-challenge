@@ -286,3 +286,25 @@ article > header {
     margin-bottom: 0.25rem;
     font-size: 0.9em;
 }
+
+
+/* Wordpress Tables */
+.wp-block-table {
+    margin: 2.5rem 0;
+}
+.wp-block-table > table {
+    margin-bottom: 0.5rem;
+}
+.wp-block-table thead {
+    border-bottom: 3px solid;
+}
+.wp-block-table th, .wp-block-table td {
+    padding: 0.5em;
+    border: 1px solid;
+    word-break: normal;
+}
+.wp-block-table figcaption {
+    color: #555;
+    font-size: 0.85rem;
+    text-align: center;
+}
