@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Ticker Meta Box Markup
  *
@@ -72,19 +71,5 @@ function mfsa_save_ticker_meta_box( $post_id, $post, $update ) {
 
 }
 add_action( 'save_post', 'mfsa_save_ticker_meta_box', 10, 3 );
-
-
-
-// Add custom meta to REST API
-// function mfsa_register_ticker_fields_to_rest() {
-//   $customFields = array('_mfsa_symbol');
-
-//   if ($customFields) {
-//     foreach($customFields as $field) {
-//       mfsa_add_custom_field_to_rest($field, 'stocks');
-//     }
-//   }
-// }
-// add_action( 'rest_api_init', 'mfsa_register_location_fields_to_rest' );
 
 ?>
