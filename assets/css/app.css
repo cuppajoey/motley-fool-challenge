@@ -185,8 +185,8 @@ article > header {
 }
 
 .post-meta > *:not(:last-child) {
-    margin-right: 1rem;
-    padding-right: 1rem;
+    margin-right: 1em;
+    padding-right: 1em;
     border-right: 1px solid var(--color-mid-gray);
 }
 
@@ -271,4 +271,18 @@ article > header {
     padding-left: 3rem;
     margin: 0.5rem 0 1rem;
     font-size: 0.9rem;
+}
+
+/* Post component */
+.post-component {
+    margin: 1rem 0 4rem;
+}
+.post-component_title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.post-component .post-meta {
+    margin-bottom: 0.25rem;
+    font-size: 0.9em;
 }

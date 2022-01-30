@@ -32,9 +32,14 @@ function mfsa_truncate_content( $content, $num_words = 30 ) {
     $trimPost = preg_replace( '#\[[^\]]+\]#', '', $content );
     $truncatedPost = wp_trim_words( $trimPost, $num_words, '...' );
     $filteredPost = apply_filters( 'mq_filter_content', $truncatedPost );
-    
+
     return $filteredPost;
 }
+
+function mfsa_filter_excerpt_more_link( $more ) {
+    return ' <a href="'.get_the_permalink().'" rel="nofollow">Continue Reading...</a>';
+}
+add_filter( 'excerpt_more', 'mfsa_filter_excerpt_more_link' );
 
 
 /**
