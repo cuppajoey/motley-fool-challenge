@@ -32,6 +32,11 @@
 
             <?php endwhile; ?>
 
+            <div class="pagination-block">
+                <?php the_posts_pagination(); ?>
+            </div>
+
+
         <?php endif; ?>
         
     </main>
