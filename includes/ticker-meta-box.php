@@ -8,9 +8,25 @@
 function mfsa_ticker_meta_box_markup($object) {
   wp_nonce_field( basename(__FILE__), 'mfsa-ticker-nonce' );
 
+  $exchanges = array('NASDAQ', 'NYSE', 'LSE');
   $symbols = array('SBUX', 'APPL', 'FB', 'TSLA');
 
   $markup = '<div class="col-container">';
+      $markup .= '<p class="form-field">';
+        $markup .= '<label for="exchange">Select Exchange</label><br>';
+        $markup .= '<select id="exchange" name="mfsa-exchange" class="components-select-control__input" style="box-sizing: border-box;">';
+          $curExchange = get_post_meta($object->ID, "_mfsa_exchange", true);
+          $markup .= '<option>Select exchange</option>';
+          foreach ($exchanges as $exchange) {
+            if ($curExchange != '' && $curExchange == $exchange) {
+              $markup .= '<option value="' .$exchange. '" selected>' .$exchange. '</option>';
+            } else {
+              $markup .= '<option value="' .$exchange. '">' .$exchange. '</option>';
+            }
+          }
+        $markup .= '</select>';
+      $markup .= '</p>';
+      
       $markup .= '<p class="form-field">';
         $markup .= '<label for="symbol">Select Company Symbol</label><br>';
         $markup .= '<select id="symbol" name="mfsa-symbol" class="components-select-control__input" style="box-sizing: border-box;">';
@@ -62,7 +78,13 @@ function mfsa_save_ticker_meta_box( $post_id, $post, $update ) {
   if ( ! in_array($post->post_type, $allowedPostTypes) )
     return $post_id;
 
+  $exchange = '';
   $symbol = '';
+
+  if ( isset( $_POST['mfsa-exchange'] ) ) {
+    $exchange = $_POST['mfsa-exchange'];
+  }
+  update_post_meta($post_id, "_mfsa_exchange", $exchange);
 
   if ( isset( $_POST['mfsa-symbol'] ) ) {
     $symbol = $_POST['mfsa-symbol'];
