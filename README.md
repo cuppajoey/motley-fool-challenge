@@ -4,10 +4,11 @@ Welcome! This is a custom Wordpress built for a coding challenge focused on addi
 
 ## Installing the theme
 
-- Clone this repo into the themes folder of your Wordpress installation
-- Activate the theme in your Dashboard
-- Import the sample content backup. *My import includes extra fake posts to test the pagination*.
-- Define your API key in the wp-config.php folder. *See API Key Requirement below*.
+For best results, I recommend installing the theme in these steps:
+1. Clone this repo into the themes folder of your Wordpress installation
+2. Activate the theme in your Dashboard
+3. Import the sample content from ./import/sample-content.xml *My import includes extra fake posts to test the pagination*.
+4. Define your API key in the wp-config.php folder. *See API Key Requirement below*.
 
 ## API Key Requirements
 
