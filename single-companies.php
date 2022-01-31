@@ -47,17 +47,26 @@
 
                     <?php if ($symbol && $recommendations) { ?>
 
-                        <hr class="wp-block-separator">
+                        <hr />
                         
                         <h2>Recommendations</h2>
 
                         <?php foreach ($recommendations as $post) { ?>
+                            <?php 
+                                $author = get_the_author();
+                                $authorPermalink = get_author_posts_url( get_the_author_meta('ID') );
+                            ?>
+                            
                             <article class="post-component">
                                 <h3 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                                 <?php the_excerpt(); ?>
                                 <div class="post-component_meta post-meta">
                                     <span class="post-date"><?php echo get_the_date('l, M j, Y', $post->ID);?></span>
-                                    <span class="author"><?php echo get_the_author($post->ID); ?></span>
+                                    <span class="post-author">
+                                        <a href="<?php echo esc_url( $authorPermalink ); ?>">
+                                            <?php echo $author; ?>
+                                        </a>
+                                    </span>
                                 </div>
                             </article>
                         <?php } ?>
@@ -80,17 +89,26 @@
 
                     <?php if ($symbol && $news) { ?>
                         
-                        <hr class="">
+                        <hr />
 
                         <h2>Other Coverage</h2>
 
                         <?php foreach ($news as $post) { ?>
+                            <?php 
+                                $author = get_the_author();
+                                $authorPermalink = get_author_posts_url( get_the_author_meta('ID') );
+                            ?>
+
                             <article class="post-component">
                                 <h3 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                                 <?php the_excerpt(); ?>
                                 <div class="post-component_meta post-meta">
                                     <span class="post-date"><?php echo get_the_date('l, M j, Y', $post->ID);?></span>
-                                    <span class="author"><?php echo get_the_author($post->ID); ?></span>
+                                    <span class="post-author">
+                                        <a href="<?php echo esc_url( $authorPermalink ); ?>">
+                                            <?php echo $author; ?>
+                                        </a>
+                                    </span>
                                 </div>
                             </article>
                         <?php } ?>
