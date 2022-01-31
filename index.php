@@ -31,7 +31,7 @@
                         <span class="post-date"><?php echo get_the_date();?></span>
                         <span class="post-author">
                             <a href="<?php echo esc_url( $authorPermalink ); ?>">
-                                <?php echo 'by ' . $author; ?>
+                                <?php echo $author; ?>
                             </a>
                         </span>
                     </div>
