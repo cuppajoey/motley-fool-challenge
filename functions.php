@@ -293,6 +293,13 @@ function mfsa_get_company_callout_box($postID) {
 
     $keyStats = $keyStats['response'];
 
+    // The API sometimes returns an error as an OK response
+    // For example: if the API key is invalid
+    // Here we're checking if the response matches the expected format
+    if (! is_array($keyStats) && property_exists($keyStats, 'Error Message')) {
+        return false;
+    }
+
     $logoURL = $keyStats[0]->image;
     $companyName = $keyStats[0]->companyName;
     $exchangeShortName = $keyStats[0]->exchangeShortName;
