@@ -271,6 +271,7 @@ function mfsa_get_company_callout_box($postID) {
     $exchangeShortName = $keyStats[0]->exchangeShortName;
     $description = $keyStats[0]->description;
     $sector = $keyStats[0]->sector;
+    $ceo = $keyStats[0]->ceo;
     $website = $keyStats[0]->website;
     $permalink = get_link_to_company_profile($keyStats[0]->symbol);
     
@@ -289,6 +290,7 @@ function mfsa_get_company_callout_box($postID) {
         $markup .= '<div class="stats-meta">';
             $markup .= '<span><strong>Exchange: </strong>' .$exchangeShortName. '</span>';
             $markup .= '<span><strong>Industry: </strong>' .$sector. '</span>';
+            $markup .= '<span><strong>CEO: </strong>' .$ceo. '</span>';
             $markup .= '<span><strong>Website: </strong><a href="' .$website. '">' .$companyName. '</a></span>';
         $markup .= '</div>';
     $markup .= '</aside>';
