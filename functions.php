@@ -70,37 +70,6 @@ function mfsa_truncate_content( $content, $num_words = 30 ) {
 
 
 /**
- * Gets the permalink for a company profile page
- *  
- * @param string $symbol the company's stock exchange symbol. Ex: SBUX (Starbucks)
- * 
- * @return mixed false | the url of the company page
- * 
- * @since 1.0.0
- */
-function get_link_to_company_profile($symbol) {
-    $getPosts = get_posts(array(
-        'post_type' => 'companies',
-        'meta_query' => array(
-            'relation' => 'AND',
-            'symbol_clause' => array(
-                'key' => '_mfsa_symbol',
-                'value' => $symbol,
-                'compare' => '='
-            )
-        )
-    ));
-
-    if (! $getPosts) return false;
-
-    $companyPageID = $getPosts ? $getPosts[0]->ID : 0;
-    $companyPageLink = $companyPageID > 0 ? get_permalink($companyPageID) : '#';
-
-    return $companyPageLink;
-}
-
-
-/**
  * Register Custom Post Types
  * 
  * Post types: Stock Recommendations, Companies
@@ -181,6 +150,37 @@ register_nav_menus(
       'main-menu' => __( 'Main Menu' ),
     )
 );
+
+
+/**
+ * Gets the permalink for a company profile page
+ *  
+ * @param string $symbol the company's stock exchange symbol. Ex: SBUX (Starbucks)
+ * 
+ * @return mixed false | the url of the company page
+ * 
+ * @since 1.0.0
+ */
+function get_link_to_company_profile($symbol) {
+    $getPosts = get_posts(array(
+        'post_type' => 'companies',
+        'meta_query' => array(
+            'relation' => 'AND',
+            'symbol_clause' => array(
+                'key' => '_mfsa_symbol',
+                'value' => $symbol,
+                'compare' => '='
+            )
+        )
+    ));
+
+    if (! $getPosts) return false;
+
+    $companyPageID = $getPosts ? $getPosts[0]->ID : 0;
+    $companyPageLink = $companyPageID > 0 ? get_permalink($companyPageID) : '#';
+
+    return $companyPageLink;
+}
 
 
 /**
@@ -272,6 +272,7 @@ function mfsa_get_company_callout_box($postID) {
     $description = $keyStats[0]->description;
     $sector = $keyStats[0]->sector;
     $website = $keyStats[0]->website;
+    $permalink = get_link_to_company_profile($keyStats[0]->symbol);
     
     // Build our markup
     $markup = '<aside class="company-stats">';
@@ -281,6 +282,9 @@ function mfsa_get_company_callout_box($postID) {
         $markup .= '</div>';
         $markup .= '<p class="stats-description">';
             $markup .= mfsa_truncate_content($description);
+            if ($permalink) {
+                $markup .= ' <a href="'.$permalink.'">Learn more about ' . $companyName . '</a>';
+            }
         $markup .= '</p>';
         $markup .= '<div class="stats-meta">';
             $markup .= '<span><strong>Exchange: </strong>' .$exchangeShortName. '</span>';
