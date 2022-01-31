@@ -13,7 +13,9 @@
         <header class="site-header">
             <div class="wrapper">
                 <div class="site-branding">
-                    <img src="<?php echo get_template_directory_uri() . "/assets/img/motley-fool-sa-logo.png"?>" alt="Stock Advisor Logo by Motley Fool">
+                    <a href="<?php echo site_url(); ?>">
+                        <img src="<?php echo get_template_directory_uri() . "/assets/img/motley-fool-sa-logo.png"?>" alt="Stock Advisor Logo by Motley Fool">
+                    </a>
                 </div>
                 <?php
                     wp_nav_menu(
