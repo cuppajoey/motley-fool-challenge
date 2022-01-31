@@ -8,7 +8,10 @@
 
                 <article <?php post_class(); ?>>
 
-                    <?php $symbol = get_post_meta(get_the_ID(), '_mfsa_symbol', true); ?>
+                    <?php 
+                        $exchange = get_post_meta(get_the_ID(), '_mfsa_exchange', true); 
+                        $symbol = get_post_meta(get_the_ID(), '_mfsa_symbol', true); 
+                    ?>
 
                     <header class="post-header">
                         <?php 
@@ -22,7 +25,7 @@
                         <h1><?php the_title(); ?></h2>
                         <?php
                             if ($symbol) {
-                                echo '<span class="ticker-tag">NASDAQ:'. $symbol .'</span>';
+                                echo '<span class="ticker-tag">' . $exchange . ":" . $symbol .'</span>';
                             }
                         ?>
                     </header>

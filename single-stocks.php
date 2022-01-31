@@ -15,11 +15,12 @@
                             <span class="post-author"><?php echo 'by ' . get_the_author(); ?></span>
 
                             <?php 
+                                $exchange = get_post_meta(get_the_ID(), '_mfsa_exchange', true); 
                                 $symbol = get_post_meta(get_the_ID(), '_mfsa_symbol', true); 
                                 $companyPermalink = $symbol ? get_link_to_company_profile($symbol) : false;
 
                                 if ($companyPermalink) {
-                                    echo '<a href="' .$companyPermalink. '">NASDAQ:' . $symbol . '</a>';
+                                    echo '<a href="' .$companyPermalink. '">' . $exchange. ':' . $symbol . '</a>';
                                 }
                             ?>
                         </div>
