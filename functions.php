@@ -262,3 +262,25 @@ function mfsa_inject_company_stats_into_post($postContent) {
 // add_filter( 'the_content', 'mfsa_inject_company_stats_into_post' );
 
 
+/**
+ * Fix pagination issue on a custom post type
+ *
+ * @link https://core.trac.wordpress.org/ticket/15551
+ *
+ * @param object $request WP_Query
+ *
+ * @return object
+ */
+function child_martfury_fix_request_redirect( $request ) {
+    if ( isset( $request->query_vars['post_type'] )
+         && 'companies' === $request->query_vars['post_type']
+         && true === $request->is_singular
+         && - 1 == $request->current_post
+         && true === $request->is_paged
+    ) {
+        add_filter( 'redirect_canonical', '__return_false' );
+    }
+
+    return $request;
+}
+add_action( 'parse_query', 'child_martfury_fix_request_redirect' );
