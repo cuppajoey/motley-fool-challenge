@@ -186,6 +186,8 @@ register_nav_menus(
 /**
  * Gets Company Key Stats by their symbol
  * Data provided by call to https://financialmodelingprep.com/ API
+ * 
+ * IMPORTANT: API KEY must be defined in wp-config.php as MFSA_API_KEY
  *
  * @param string $symbol the company's stock exchange symbol. Ex: SBUX (Starbucks)
  * 
@@ -194,10 +196,19 @@ register_nav_menus(
  * @since 1.0.0
  */
 function mfsa_get_company_profile($companySymbol) {
+    // Make sure an API key is defined
+    if (! defined('MFSA_API_KEY') ) {
+        return array(
+            'status' => 0, 
+            'response' => 'Error: Missing API KEY. You must define an API key in the wp-config file to use this feature. See https://github.com/cuppajoey/motley-fool-challenge for details.'
+        );
+    };
+    
     set_time_limit(0);
 
+    $APIKEY = MFSA_API_KEY;
     $companySymbol = strtoupper($companySymbol);
-    $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey=c476529e78fd5983209d711074671601";
+    $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey={$APIKEY}";
 
     $channel = curl_init();
 
@@ -248,7 +259,10 @@ function mfsa_get_company_callout_box($postID) {
     // Get company stats from API
     $keyStats = mfsa_get_company_profile($symbol);
 
-    if ($keyStats['status'] === 0) return false;
+    if ($keyStats['status'] === 0) {
+        error_log( print_r($keyStats['response'], true) );
+        return false;
+    }
 
     $keyStats = $keyStats['response'];
 
@@ -304,7 +318,7 @@ function mfsa_inject_company_stats_into_post($postContent) {
     }
     return $postContent;
 }
-// add_filter( 'the_content', 'mfsa_inject_company_stats_into_post' );
+add_filter( 'the_content', 'mfsa_inject_company_stats_into_post' );
 
 
 /**

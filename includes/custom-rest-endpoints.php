@@ -12,6 +12,8 @@
 /**
  * Gets latest stock quote for a company by their symbol
  * Data provided by call to https://financialmodelingprep.com/ API
+ * 
+ * IMPORTANT: API KEY must be defined in wp-config.php as MFSA_API_KEY
  *
  * @param array $request request parameters
  * 
@@ -20,10 +22,18 @@
  * @since 1.0.0
  */
 function mfsa_rest_get_company_quote($request) {
+    // Make sure an API key is defined
+    if (! defined('MFSA_API_KEY') ) {
+        return new WP_REST_Response( [
+			'message' => 'Error: Missing API KEY. You must define an API key in the wp-config file to use this feature. See https://github.com/cuppajoey/motley-fool-challenge for details.',
+		], 400 );
+    };
+
     set_time_limit(0);
 
+    $APIKEY = MFSA_API_KEY;
     $companySymbol = strtoupper($request['symbol']);
-    $endpoint = "https://financialmodelingprep.com/api/v3/quote/{$companySymbol}?apikey=c476529e78fd5983209d711074671601";
+    $endpoint = "https://financialmodelingprep.com/api/v3/quote/{$companySymbol}?apikey={$APIKEY}";
 
     $channel = curl_init();
 
@@ -53,6 +63,8 @@ function mfsa_rest_get_company_quote($request) {
 /**
  * Gets Company Key Stats by their symbol
  * Data provided by call to https://financialmodelingprep.com/ API
+ * 
+ * IMPORTANT: API KEY must be defined in wp-config.php as MFSA_API_KEY
  *
  * @param array $request request parameters
  * 
@@ -61,10 +73,17 @@ function mfsa_rest_get_company_quote($request) {
  * @since 1.0.0
  */
 function mfsa_rest_get_company_profile($request) {
+    // Make sure an API key is defined
+    if (! defined('MFSA_API_KEY') ) {
+        return new WP_REST_Response( [
+			'message' => 'Error: Missing API KEY. You must define an API key in the wp-config file to use this feature. See https://github.com/cuppajoey/motley-fool-challenge for details.',
+		], 400 );
+    };
+
     set_time_limit(0);
 
     $companySymbol = strtoupper($request['symbol']);
-    $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey=c476529e78fd5983209d711074671601";
+    $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey={$APIKEY}";
 
     $channel = curl_init();
 
