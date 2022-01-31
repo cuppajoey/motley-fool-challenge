@@ -16,7 +16,9 @@
 
                 <article class="post-component">
                     <h2 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+
                     <?php the_excerpt(); ?>
+                    
                     <div class="post-component_meta post-meta">
                         <span class="post-date"><?php echo get_the_date();?></span>
                         <span class="post-author">
