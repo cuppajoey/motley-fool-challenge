@@ -1,3 +1,9 @@
+<?php 
+/**
+ * This template is used for a single stock recommendation post
+ *
+ */
+?>
 <?php get_header(); ?>
 
     <div class="wrapper-sm">

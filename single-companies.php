@@ -1,3 +1,13 @@
+<?php 
+/**
+ * This template is used for a single company post.
+ * It displays the post content, related stock recommendation, and related news
+ * 
+ * Company stats are injected via Javascript /assets/js/app.js
+ *
+ */
+?>
+
 <?php get_header(); ?>
 
     <div class="wrapper-sm">

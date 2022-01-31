@@ -1,8 +1,22 @@
 <?php 
 /**
- * Get Company Financial Quote
+ * This file registers custom endpoints on the WP Rest API.
+ * These endpoints are used by our javascript to get and display
+ * stock exchange data about companies on Stock recommendation posts
+ * and Company posts.
+ *
+ * @since 1.0.0
+ */
+
+
+/**
+ * Gets latest stock quote for a company by their symbol
  * Data provided by call to https://financialmodelingprep.com/ API
  *
+ * @param array $request request parameters
+ * 
+ * @return object
+ * 
  * @since 1.0.0
  */
 function mfsa_rest_get_company_quote($request) {
@@ -37,9 +51,13 @@ function mfsa_rest_get_company_quote($request) {
 
 
 /**
- * Get Company Key Stats
+ * Gets Company Key Stats by their symbol
  * Data provided by call to https://financialmodelingprep.com/ API
  *
+ * @param array $request request parameters
+ * 
+ * @return object
+ * 
  * @since 1.0.0
  */
 function mfsa_rest_get_company_profile($request) {
@@ -72,8 +90,9 @@ function mfsa_rest_get_company_profile($request) {
     }
 }
 
+
 /**
- * Custom Rest API Endpoint that returns a company exchange quote
+ * Registers the endpoint a stock quote
  * 
  * Hooks into rest_api_init action to add a URL endpoint. 
  * This endpoint calls mfsa_rest_get_company_quote() to return the latest stock quote.
@@ -99,7 +118,7 @@ add_action( 'rest_api_init', 'mfsa_register_company_quote_endpoint' );
 
 
 /**
- * Custom Rest API Endpoint that returns a company exchange profile
+ * Registers the endpoint for a company exchange profile
  * 
  * Hooks into rest_api_init action to add a URL endpoint. 
  * This endpoint calls mfsa_rest_get_company_profile() to return the latest stock quote.

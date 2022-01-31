@@ -1,7 +1,14 @@
 <?php
+/**
+ * This file contains the markup and logic used to register custom
+ * post_meta for Posts, Stock Recommendations, and Companies. We
+ * use this post_meta to link different content together.
+ *
+ * @since 1.0.0
+ */
 
 /**
- * Ticker Meta Box Markup
+ * Builds the markup for a meta boxes found on the post edit screen
  *
  * @since 1.0.0
  */
@@ -49,7 +56,7 @@ function mfsa_ticker_meta_box_markup($object) {
 
 
 /**
- * Register Sales Reps Meta Box
+ * Register Ticker Meta Box
  *
  * @since 1.0.0
  */
@@ -60,7 +67,7 @@ add_action( 'add_meta_boxes', 'mfsa_add_ticker_meta_box' );
 
 
 /**
- * Save Sales Reps Meta Box
+ * Save Ticker Meta Box Data
  *
  * @since 1.0.0
  */
