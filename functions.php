@@ -1,6 +1,7 @@
 <?php
 
-require('ticker-meta-box.php');
+require('includes/ticker-meta-box.php');
+require('includes/custom-rest-endpoints.php');
 
 
 function mfsa_load_styles() {
@@ -8,7 +9,9 @@ function mfsa_load_styles() {
     wp_enqueue_style( 'mfsa-theme-css', get_template_directory_uri() . '/assets/css/app.css', array('mfsa-reset'), '1.0' );
     wp_register_script( 'load-exchange-company-data', get_template_directory_uri() . '/assets/js/app.js', array(), '1.0', true );
 
-    wp_enqueue_script( 'load-exchange-company-data' );
+    if (! is_admin() && get_post_type(get_the_id()) === 'companies') {
+        wp_enqueue_script( 'load-exchange-company-data' );
+    }
 }
 add_action('wp_enqueue_scripts', 'mfsa_load_styles');
 
@@ -143,53 +146,16 @@ register_nav_menus(
 
 
 /**
- * Get Company Financial Quote
- * Data provided by call to https://financialmodelingprep.com/ API
- *
- * @since 1.0.0
- */
-function mfsa_rest_get_company_quote($request) {
-    set_time_limit(0);
-
-    $companySymbol = strtoupper($request['symbol']);
-    $endpoint = "https://financialmodelingprep.com/api/v3/quote/{$companySymbol}?apikey=e2471ff0e15771593da05997639bf01d";
-
-    $channel = curl_init();
-
-    curl_setopt($channel, CURLOPT_AUTOREFERER, TRUE);
-    curl_setopt($channel, CURLOPT_HEADER, 0);
-    curl_setopt($channel, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($channel, CURLOPT_URL, $endpoint);
-    curl_setopt($channel, CURLOPT_FOLLOWLOCATION, TRUE);
-    curl_setopt($channel, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-    curl_setopt($channel, CURLOPT_TIMEOUT, 0);
-    curl_setopt($channel, CURLOPT_CONNECTTIMEOUT, 0);
-    curl_setopt($channel, CURLOPT_SSL_VERIFYHOST, FALSE);
-    curl_setopt($channel, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-    $output = curl_exec($channel);
-
-    if (curl_error($channel)) {
-        return new WP_REST_Response( [
-			'message' => 'Company data not found',
-		], 400 );
-    } else {
-        return new WP_REST_Response( json_decode($output), 200 );
-    }
-}
-
-
-/**
  * Get Company Key Stats
  * Data provided by call to https://financialmodelingprep.com/ API
  *
  * @since 1.0.0
  */
-function mfsa_rest_get_company_profile($request) {
+function mfsa_get_company_profile($companySymbol) {
     set_time_limit(0);
 
-    $companySymbol = strtoupper($request['symbol']);
-    $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey=e2471ff0e15771593da05997639bf01d";
+    $companySymbol = strtoupper($companySymbol);
+    $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey=c476529e78fd5983209d711074671601";
 
     $channel = curl_init();
 
@@ -207,16 +173,20 @@ function mfsa_rest_get_company_profile($request) {
     $output = curl_exec($channel);
 
     if (curl_error($channel)) {
-        return new WP_REST_Response( [
-			'message' => 'Company data not found',
-		], 400 );
+        $response = array(
+            'status' => 0,
+            'response' => 'Error:' . curl_error($channel)
+        );
     } else {
-        return new WP_REST_Response( json_decode($output), 200 );
+        $response = array(
+            'status' => 1,
+            'response' => json_decode($output)
+        );
     }
+    return $response;
 }
 
 function mfsa_get_company_callout_box($postID) {
-    return false;
     // Get the symbol assigned to post
     $symbol = get_post_meta($postID, '_mfsa_symbol', true);
     
@@ -224,7 +194,11 @@ function mfsa_get_company_callout_box($postID) {
     if (! $symbol) return false;
     
     // Get company stats from API
-    $keyStats = mfsa_rest_get_company_profile($symbol);
+    $keyStats = mfsa_get_company_profile($symbol);
+
+    if ($keyStats['status'] === 0) return false;
+
+    $keyStats = $keyStats['response'];
 
     $logoURL = $keyStats[0]->image;
     $companyName = $keyStats[0]->companyName;
@@ -271,53 +245,3 @@ function mfsa_inject_company_stats_into_post($postContent) {
 add_filter( 'the_content', 'mfsa_inject_company_stats_into_post' );
 
 
-/**
- * Custom Rest API Endpoint that returns a company exchange quote
- * 
- * Hooks into rest_api_init action to add a URL endpoint. 
- * This endpoint calls mfsa_rest_get_company_quote() to return the latest stock quote.
- * 
- */
-function mfsa_register_company_quote_endpoint() {
-	
-	// Visit /wp-json/mfsa/v1/quote to get the latest quote
-	register_rest_route( 'mfsa/v1', '/quote', array(
-		'methods' => 'GET',
-		'callback' =>  'mfsa_rest_get_company_quote',
-		'permission_callback' => '__return_true',
-        'args'     => [
-			'symbol' => [
-				'required' => true,
-				'type'     => 'string',
-			],
-		],
-    ) );
-	
-}
-add_action( 'rest_api_init', 'mfsa_register_company_quote_endpoint' );
-
-
-/**
- * Custom Rest API Endpoint that returns a company exchange profile
- * 
- * Hooks into rest_api_init action to add a URL endpoint. 
- * This endpoint calls mfsa_rest_get_company_profile() to return the latest stock quote.
- * 
- */
-function mfsa_register_company_profile_endpoint() {
-	
-	// Visit /wp-json/mfsa/v1/quote to get the latest quote
-	register_rest_route( 'mfsa/v1', '/profile', array(
-		'methods' => 'GET',
-		'callback' =>  'mfsa_rest_get_company_profile',
-		'permission_callback' => '__return_true',
-        'args'     => [
-			'symbol' => [
-				'required' => true,
-				'type'     => 'string',
-			],
-		],
-    ) );
-	
-}
-add_action( 'rest_api_init', 'mfsa_register_company_profile_endpoint' );
