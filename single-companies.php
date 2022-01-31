@@ -46,7 +46,11 @@
                     ?>
 
                     <?php if ($symbol && $recommendations) { ?>
+
+                        <hr class="wp-block-separator">
+                        
                         <h2>Recommendations</h2>
+
                         <?php foreach ($recommendations as $post) { ?>
                             <article class="post-component">
                                 <h3 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
@@ -57,6 +61,7 @@
                                 </div>
                             </article>
                         <?php } ?>
+
                     <?php } ?>
                     
                     <?php 
@@ -74,7 +79,11 @@
                     ?>
 
                     <?php if ($symbol && $news) { ?>
+                        
+                        <hr class="">
+
                         <h2>Other Coverage</h2>
+
                         <?php foreach ($news as $post) { ?>
                             <article class="post-component">
                                 <h3 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
@@ -85,7 +94,9 @@
                                 </div>
                             </article>
                         <?php } ?>
+
                     <?php } ?>
+
                 </article>
 
             <?php endwhile; ?>

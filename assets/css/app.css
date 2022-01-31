@@ -69,9 +69,10 @@ ul ul, ol ol, ul ol, ol ul {
     margin-top: 0em;
     margin-bottom: 0em;
 }
-hr, .hr {
-    border: 1px solid;
-    margin: -1px 0;
+hr, .hr, .wp-block-separator {
+    border: 0;
+    border-top: 1px solid var(--color-mid-gray);
+    margin: 3rem 0;
 }
 a, b, i, strong, em, small, code {
     line-height: 0;
