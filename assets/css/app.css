@@ -277,6 +277,7 @@ article > header {
     grid-template-columns: 1fr 1fr;
     border: 1px solid #000;
     margin: 1rem 0 2rem;
+    font-family: var(--font-accent);
 }
 
 .table-cell {
