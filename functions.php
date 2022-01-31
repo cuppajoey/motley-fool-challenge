@@ -1,9 +1,17 @@
 <?php
 
+// Load ticker symbol meta box functions
 require('includes/ticker-meta-box.php');
+
+// Load custom WP REST API functions
 require('includes/custom-rest-endpoints.php');
 
 
+/**
+ * Load Theme CSS and JS files
+ *
+ * @since 1.0.0
+ */
 function mfsa_load_styles() {
     wp_enqueue_style( 'mfsa-reset', get_template_directory_uri() . '/assets/css/reset.css', array(), '1.0' );
     wp_enqueue_style( 'mfsa-theme-css', get_template_directory_uri() . '/assets/css/app.css', array('mfsa-reset'), '1.0' );
@@ -16,14 +24,25 @@ function mfsa_load_styles() {
 add_action('wp_enqueue_scripts', 'mfsa_load_styles');
 
 
+/**
+ * Adds required theme supports
+ *
+ * @since 1.0.0
+ */
 function mfsa_theme_setup() {
-    // Add required theme supports
     add_theme_support( 'title-tag' );
     add_theme_support( 'post-thumbnails' );
 }
 add_action( 'after_setup_theme', 'mfsa_theme_setup' );
 
 
+/**
+ * Gets theme info from style.css doc block
+ *  
+ * @param string $request "Ex: Theme Name | Author | Author URI | Version | Etc"
+ * 
+ * @since 1.0.0
+ */
 function mfsa_get_theme_info($request) {
     $themeInfo = wp_get_theme();
 
@@ -31,6 +50,16 @@ function mfsa_get_theme_info($request) {
 }
 
 
+/**
+ * Trims a paragraph to max number of words
+ *  
+ * @param string $content The paragraph you want to trim
+ * @param int $num_words Max number of words you want to allow. Default: 30
+ * 
+ * @return string the trimmed paragraph
+ * 
+ * @since 1.0.0
+ */
 function mfsa_truncate_content( $content, $num_words = 30 ) {
     $trimPost = preg_replace( '#\[[^\]]+\]#', '', $content );
     $truncatedPost = wp_trim_words( $trimPost, $num_words, '...' );
@@ -40,6 +69,15 @@ function mfsa_truncate_content( $content, $num_words = 30 ) {
 }
 
 
+/**
+ * Gets the permalink for a company profile page
+ *  
+ * @param string $symbol the company's stock exchange symbol. Ex: SBUX (Starbucks)
+ * 
+ * @return mixed false | the url of the company page
+ * 
+ * @since 1.0.0
+ */
 function get_link_to_company_profile($symbol) {
     $getPosts = get_posts(array(
         'post_type' => 'companies',
@@ -65,7 +103,7 @@ function get_link_to_company_profile($symbol) {
 /**
  * Register Custom Post Types
  * 
- * Post types: Stock Recommendations
+ * Post types: Stock Recommendations, Companies
  *
  * @since 1.0.0
  */
@@ -132,23 +170,6 @@ function mfsa_register_post_types() {
 }
 add_action( 'init', 'mfsa_register_post_types' );
 
-/**
- * Include Stock Recommendations post type in main query on homepage
- * This allows CPTs to share template files (index, single, etc) with main posts
- *
- * @since 1.0.0
- */
-function mfsa_include_stock_cpt_on_homepage( $query ) {
-    if ( ! is_admin() && $query->is_main_query() ) {
-        if ( $query->is_home() ) {
-            $query->set( 'post_type', array( 'post', 'stocks' ) );
-        }
-    }
-    return $query;
-}
-// add_action( 'pre_get_posts', 'mfsa_include_stock_cpt_on_homepage' );
-
-
 
 /**
  * Register Menus
@@ -163,9 +184,13 @@ register_nav_menus(
 
 
 /**
- * Get Company Key Stats
+ * Gets Company Key Stats by their symbol
  * Data provided by call to https://financialmodelingprep.com/ API
  *
+ * @param string $symbol the company's stock exchange symbol. Ex: SBUX (Starbucks)
+ * 
+ * @return array
+ * 
  * @since 1.0.0
  */
 function mfsa_get_company_profile($companySymbol) {
@@ -203,6 +228,16 @@ function mfsa_get_company_profile($companySymbol) {
     return $response;
 }
 
+
+/**
+ * Creates the HTML markup for a company callout box
+ *
+ * @param int $postID the id of the associated post
+ * 
+ * @return string the html markup
+ * 
+ * @since 1.0.0
+ */
 function mfsa_get_company_callout_box($postID) {
     // Get the symbol assigned to post
     $symbol = get_post_meta($postID, '_mfsa_symbol', true);
@@ -243,6 +278,16 @@ function mfsa_get_company_callout_box($postID) {
     return $markup;
 }
 
+/**
+ * Injects a company stats callout box after the 2nd paragraph of
+ * a Stock Recommendation post
+ *
+ * @param string $postContent the post body
+ * 
+ * @return string the filtered post body
+ * 
+ * @since 1.0.0
+ */
 function mfsa_inject_company_stats_into_post($postContent) {
     if ( is_single() && get_post_type() === 'stocks' ) {
         // Get the 2nd instance of a closing paragraph tag
@@ -271,7 +316,7 @@ function mfsa_inject_company_stats_into_post($postContent) {
  *
  * @return object
  */
-function child_martfury_fix_request_redirect( $request ) {
+function mfsa_fix_request_redirect( $request ) {
     if ( isset( $request->query_vars['post_type'] )
          && 'companies' === $request->query_vars['post_type']
          && true === $request->is_singular
@@ -283,4 +328,4 @@ function child_martfury_fix_request_redirect( $request ) {
 
     return $request;
 }
-add_action( 'parse_query', 'child_martfury_fix_request_redirect' );
+add_action( 'parse_query', 'mfsa_fix_request_redirect' );
