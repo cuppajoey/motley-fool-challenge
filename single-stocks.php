@@ -14,28 +14,12 @@
                             <span class="post-date"><?php echo get_the_date();?></span>
                             <span class="post-author"><?php echo 'by ' . get_the_author(); ?></span>
 
-                            <?php $symbol = get_post_meta(get_the_ID(), '_mfsa_symbol', true); ?>
                             <?php 
-                                if ($symbol) { 
-                                    $findCompanyPage = get_posts(
-                                        array(
-                                            'post_type' => 'companies',
-                                            'meta_query' => array(
-                                                'relation' => 'AND',
-                                                'symbol_clause' => array(
-                                                    'key' => '_mfsa_symbol',
-                                                    'value' => $symbol,
-                                                    'compare' => '='
-                                                )
-                                            ),
-                                        )
-                                    );
-                                    $companyPageID = $findCompanyPage ? $findCompanyPage[0]->ID : 0;
-                                    $companyPageLink = $companyPageID > 0 ? get_permalink($companyPageID) : '#';
-                                
-                                    if ($companyPageID) {
-                                        echo '<a href="' .$companyPageLink. '">NASDAQ:' . $symbol . '</a>';
-                                    }
+                                $symbol = get_post_meta(get_the_ID(), '_mfsa_symbol', true); 
+                                $companyPermalink = $symbol ? get_link_to_company_profile($symbol) : false;
+
+                                if ($companyPermalink) {
+                                    echo '<a href="' .$companyPermalink. '">NASDAQ:' . $symbol . '</a>';
                                 }
                             ?>
                         </div>

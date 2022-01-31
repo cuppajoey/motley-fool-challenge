@@ -10,7 +10,7 @@ function mfsa_load_styles() {
     wp_register_script( 'load-exchange-company-data', get_template_directory_uri() . '/assets/js/app.js', array(), '1.0', true );
 
     if (! is_admin() && get_post_type(get_the_id()) === 'companies') {
-        wp_enqueue_script( 'load-exchange-company-data' );
+        // wp_enqueue_script( 'load-exchange-company-data' );
     }
 }
 add_action('wp_enqueue_scripts', 'mfsa_load_styles');
@@ -42,7 +42,29 @@ function mfsa_truncate_content( $content, $num_words = 30 ) {
 function mfsa_filter_excerpt_more_link( $more ) {
     return ' <a href="'.get_the_permalink().'" rel="nofollow">Continue Reading...</a>';
 }
-add_filter( 'excerpt_more', 'mfsa_filter_excerpt_more_link' );
+// add_filter( 'excerpt_more', 'mfsa_filter_excerpt_more_link' );
+
+
+function get_link_to_company_profile($symbol) {
+    $getPosts = get_posts(array(
+        'post_type' => 'companies',
+        'meta_query' => array(
+            'relation' => 'AND',
+            'symbol_clause' => array(
+                'key' => '_mfsa_symbol',
+                'value' => $symbol,
+                'compare' => '='
+            )
+        )
+    ));
+
+    if (! $getPosts) return false;
+
+    $companyPageID = $getPosts ? $getPosts[0]->ID : 0;
+    $companyPageLink = $companyPageID > 0 ? get_permalink($companyPageID) : '#';
+
+    return $companyPageLink;
+}
 
 
 /**
@@ -242,6 +264,6 @@ function mfsa_inject_company_stats_into_post($postContent) {
     }
     return $postContent;
 }
-add_filter( 'the_content', 'mfsa_inject_company_stats_into_post' );
+// add_filter( 'the_content', 'mfsa_inject_company_stats_into_post' );
 
 
