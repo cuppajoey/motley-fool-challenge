@@ -5,13 +5,15 @@
 
 /* Site Color Scheme */
 :root {
-    --color-dark-blue: rgb(0, 110, 157);
+    --color-dark-blue: rgb(0, 90, 129);
     --color-light-blue: rgb(1, 125, 167);
     --color-mid-gray: #e4e4e4;
     --color-light-gray: #f8f8f8;
     --color-black: #222222;
     --color-white: #ffffff;
-    --color-gold: rgb(248, 177, 53)
+    --color-gold: rgb(248, 177, 53);
+    --font-body: 'Georgia', 'Cambrai', 'Times New Romain', serif;
+    --font-accent: 'Poppins', 'Helvetica', 'Arial', sans-serif;
 }
 
 /* Typography */
@@ -22,9 +24,12 @@ html, .root {
 body {
     background-color: var(--color-light-gray);
     color: var(--color-black);
-    font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
+    font-family: var(--font-body);
     font-size: 1em;
     line-height: 1.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-accent);
 }
 h1, .heading-size-1 {
     font-size: 3.0625em;
@@ -86,6 +91,11 @@ sub {
 /* Links & Buttons */
 a {
     color: var(--color-dark-blue);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.1em;
+}
+a:hover {
+    text-decoration-style: dotted;
 }
 
 /* Component Wrappers */
@@ -96,7 +106,7 @@ a {
     padding: 0 1rem;
 }
 .wrapper-sm {
-    max-width: 850px;
+    max-width: 750px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 1rem;
@@ -129,6 +139,7 @@ a {
     justify-content: flex-end;
     padding-left: 0;
     margin-bottom: 0;
+    font-family: var(--font-accent);
 }
 .primary-nav .menu li {
     margin: 0 1em;
@@ -147,10 +158,20 @@ a {
 #site-content {
     background-color: var(--color-white);
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    max-width: 900px;
+    max-width: 1240px;
     padding: 2rem;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+}
+#site-content::before {
+    content: "";
+    background-image: linear-gradient(to right, var(--color-light-blue) 50%, var(--color-dark-blue) 50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
 }
 
 /* Display Classes */
@@ -182,6 +203,7 @@ article > header {
     flex: 1;
     align-items: center;
     margin-bottom: 1rem;
+    font-family: var(--font-accent);
 }
 
 .post-meta > *:not(:last-child) {
