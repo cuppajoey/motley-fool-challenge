@@ -82,6 +82,7 @@ function mfsa_rest_get_company_profile($request) {
 
     set_time_limit(0);
 
+    $APIKEY = MFSA_API_KEY;
     $companySymbol = strtoupper($request['symbol']);
     $endpoint = "https://financialmodelingprep.com/api/v3/profile/{$companySymbol}?apikey={$APIKEY}";
 
