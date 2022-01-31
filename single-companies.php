@@ -23,7 +23,9 @@
 
                 <header class="post-header">
                     <?php 
-                        $companyLogo = has_post_thumbnail() ? get_the_post_thumbnail( get_the_id(), 'thumbnail', array('class' => 'd-inline-block') ) : false;
+                        $companyLogo = has_post_thumbnail() ? 
+                                        get_the_post_thumbnail( get_the_id(), 'thumbnail', array('class' => 'd-inline-block') ) : 
+                                        '<img src="'.get_template_directory_uri().'/assets/img/SBUX.png" />';
 
                         if ($companyLogo) {
                             echo $companyLogo;
