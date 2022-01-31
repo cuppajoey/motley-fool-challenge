@@ -7,6 +7,9 @@
             <?php while ( have_posts() ) : the_post(); ?>
 
                 <article <?php post_class(); ?>>
+
+                    <?php $symbol = get_post_meta(get_the_ID(), '_mfsa_symbol', true); ?>
+
                     <header class="post-header">
                         <?php 
                             $companyLogo = has_post_thumbnail() ? get_the_post_thumbnail( get_the_id(), 'thumbnail', array('class' => 'd-inline-block') ) : false;
@@ -17,30 +20,16 @@
                         ?>
 
                         <h1><?php the_title(); ?></h2>
-                        <span class="ticker-tag">NASDAQ:SBUX</span>
+                        <?php
+                            if ($symbol) {
+                                echo '<span class="ticker-tag">NASDAQ:'. $symbol .'</span>';
+                            }
+                        ?>
                     </header>
+
                     <?php the_content(); ?>
 
                     <div id="mfsa-stats"></div>
-
-                    <?php 
-                        // $keyStats = mfsa_get_company_stats("SBUX");
-                        // $quote = mfsa_get_company_quote("SBUX");
-
-                        // $price = $quote[0]->price;
-                        // $change = $quote[0]->change;
-                        // $changesPercentage = $quote[0]->changesPercentage;
-                        // $range = $keyStats[0]->range;
-                        // $beta = $keyStats[0]->beta;
-                        // $avgVolume = $quote[0]->avgVolume;
-                        // $marketCap = $quote[0]->marketCap;
-                        // $lastDiv = $keyStats[0]->lastDiv;
-
-                        // echo '<pre>';
-                        // print_r($keyStats);
-                        // print_r($quote);
-                        // echo '</pre>';
-                    ?>
 
                     <?php 
                         $recommendations = get_posts(array(
@@ -49,14 +38,14 @@
                                 'relation' => 'AND',
                                 'symbol_clause' => array(
                                     'key' => '_mfsa_symbol',
-                                    'value' => 'SBUX',
+                                    'value' => $symbol,
                                     'compare' => '='
                                 )
                             ),
                         ));
                     ?>
 
-                    <?php if ($recommendations) { ?>
+                    <?php if ($symbol && $recommendations) { ?>
                         <h2>Recommendations</h2>
                         <?php foreach ($recommendations as $post) { ?>
                             <article class="post-component">
@@ -77,14 +66,14 @@
                                 'relation' => 'AND',
                                 'symbol_clause' => array(
                                     'key' => '_mfsa_symbol',
-                                    'value' => 'SBUX',
+                                    'value' => $symbol,
                                     'compare' => '='
                                 )
                             ),
                         ));
                     ?>
 
-                    <?php if ($news) { ?>
+                    <?php if ($symbol && $news) { ?>
                         <h2>Other Coverage</h2>
                         <?php foreach ($news as $post) { ?>
                             <article class="post-component">
