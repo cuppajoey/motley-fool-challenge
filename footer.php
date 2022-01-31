@@ -1,3 +1,5 @@
+        </main> <!-- end #site-content -->
+
         <footer class="site-footer">
             <div class="wrapper">
                 <?php echo bloginfo('name'); ?> | 
