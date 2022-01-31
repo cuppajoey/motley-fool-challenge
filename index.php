@@ -19,7 +19,6 @@
                 <?php 
                     $postType = get_post_type(); 
                     $author = get_the_author();
-                    $authorPermalink = get_author_posts_url( get_the_author_meta('ID') );
                 ?>
 
                 <article class="post-component">
@@ -29,11 +28,7 @@
 
                     <div class="post-component_meta post-meta">
                         <span class="post-date"><?php echo get_the_date();?></span>
-                        <span class="post-author">
-                            <a href="<?php echo esc_url( $authorPermalink ); ?>">
-                                <?php echo $author; ?>
-                            </a>
-                        </span>
+                        <span class="post-author"><?php echo $author; ?></span>
                         
                         <?php 
                             if ($postType === 'stocks') {
