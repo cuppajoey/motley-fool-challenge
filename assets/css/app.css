@@ -11,7 +11,7 @@
     --color-light-gray: #f8f8f8;
     --color-black: #222222;
     --color-white: #ffffff;
-    --color-gold: rgb(248, 177, 53);
+    --color-gold: rgb(255, 197, 97);
     --font-body: 'Georgia', 'Cambrai', 'Times New Romain', serif;
     --font-accent: 'Poppins', 'Helvetica', 'Arial', sans-serif;
 }
@@ -258,6 +258,7 @@ article > header {
 
 .ticker-tag {
     background: var(--color-gold);
+    font-family: var(--font-accent);
     color: #000000;
     border-radius: 0.5em;
     padding: 0.5rem;
