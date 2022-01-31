@@ -159,6 +159,27 @@ register_nav_menus(
 
 
 /**
+ * Fallback menu for imported installations
+ *
+ * @since 1.0.0
+ */
+function mfsa_default_menu() {
+    $output = '<nav class="primary-nav">';
+        $output .= '<ul class="menu">';
+            $output .= '<li class="menu-item">';
+                $output .= '<a href="'.site_url().'">Latest News</a>';
+            $output .= '</li>';
+            $output .= '<li class="menu-item">';
+                $output .= '<a href="'.site_url("/stocks").'">Stock Recommendations</a>';
+            $output .= '</li>';
+        $output .= '</ul>';
+    $output .= '</nav>';
+
+    echo $output;
+}
+
+
+/**
  * Gets the permalink for a company profile page
  *  
  * @param string $symbol the company's stock exchange symbol. Ex: SBUX (Starbucks)

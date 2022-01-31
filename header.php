@@ -24,6 +24,7 @@
                             'container' => 'nav',
                             'container_id' => '',
                             'container_class' => 'primary-nav',
+                            'fallback_cb' => 'mfsa_default_menu'
                         )
                     );
                 ?>
