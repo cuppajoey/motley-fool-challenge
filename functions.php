@@ -15,10 +15,16 @@ require('includes/custom-rest-endpoints.php');
 function mfsa_load_styles() {
     wp_enqueue_style( 'mfsa-reset', get_template_directory_uri() . '/assets/css/reset.css', array(), '1.0' );
     wp_enqueue_style( 'mfsa-theme-css', get_template_directory_uri() . '/assets/css/app.css', array('mfsa-reset'), '1.0' );
-    wp_register_script( 'load-exchange-company-data', get_template_directory_uri() . '/assets/js/app.js', array(), '1.0', true );
+    wp_register_script( 'mfsa-stock-api', get_template_directory_uri() . '/assets/js/app.js', array(), '1.0', true );
 
-    if (! is_admin() && get_post_type(get_the_id()) === 'companies') {
-        // wp_enqueue_script( 'load-exchange-company-data' );
+    if (! is_admin() && is_single() && get_post_type(get_the_id()) === 'companies') {
+        wp_enqueue_script( 'mfsa-stock-api' );
+        wp_add_inline_script( 'mfsa-stock-api', 'const MFSA_DATA = ' . json_encode( 
+            array( 
+                'site_url' => site_url(),
+                'symbol' => get_post_meta(get_the_ID(), '_mfsa_symbol', true),
+            )
+        ), 'before' );
     }
 }
 add_action('wp_enqueue_scripts', 'mfsa_load_styles');

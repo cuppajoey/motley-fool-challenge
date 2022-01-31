@@ -1,4 +1,10 @@
-const TOKEN = "";
+/*
+ *  MFSA_DATA is an object enqueued with data required for the API calls
+ *  
+ *  Available properties: 
+ *  site_url - the base url of the website
+ *  symbol - the ticker symbol of current company (Ex: SBUX)
+ */ 
 
 const formatCurrency = (num) => {
     let formatHandler = new Intl.NumberFormat("en-us", {
@@ -20,8 +26,11 @@ const formatDecimal = num => Number.parseFloat(num).toFixed(2);
 const formatNumberWithSeparators = num => num.toLocaleString("en-us");
 
 const getCompanyStockProfile = () => {
-    let getCompanyQuote = fetch("http://stockadvisor.local/wp-json/mfsa/v1/quote/?symbol=sbux");
-    let getCompanyProfile = fetch("http://stockadvisor.local/wp-json/mfsa/v1/profile/?symbol=sbux");
+    let site_url = MFSA_DATA.site_url;
+    let symbol = MFSA_DATA.symbol.toLowerCase();
+
+    let getCompanyQuote = fetch(`${site_url}/wp-json/mfsa/v1/quote/?symbol=${symbol}`);
+    let getCompanyProfile = fetch(`${site_url}/wp-json/mfsa/v1/profile/?symbol=${symbol}`);
     
     Promise.all([getCompanyQuote, getCompanyProfile])
         .then(values => Promise.all(values.map(value => value.json())))
