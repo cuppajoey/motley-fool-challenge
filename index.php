@@ -2,7 +2,15 @@
 
     <div class="wrapper-sm">
 
-        <h1>News & Recommendations</h1>
+        <?php if ( is_post_type_archive('stocks') ) { ?>    
+
+            <h1>Stock Recommendations</h1>
+
+        <?php } else { ?>    
+
+            <h1>Latest News</h1>
+
+        <?php } ?>
 
         <?php if ( have_posts() ) : ?>
 
@@ -18,7 +26,7 @@
                     <h2 class="post-component_title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
                     <?php the_excerpt(); ?>
-                    
+
                     <div class="post-component_meta post-meta">
                         <span class="post-date"><?php echo get_the_date();?></span>
                         <span class="post-author">
@@ -26,11 +34,6 @@
                                 <?php echo 'by ' . $author; ?>
                             </a>
                         </span>
-                        <?php if ($postType === 'stocks') { ?>
-                            <span class="post-type">Stock Recommendation</span>
-                        <?php } else { ?>
-                            <span class="post-type">News</span>
-                        <?php } ?>
                     </div>
                 </article>
 

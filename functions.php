@@ -39,11 +39,6 @@ function mfsa_truncate_content( $content, $num_words = 30 ) {
     return $filteredPost;
 }
 
-function mfsa_filter_excerpt_more_link( $more ) {
-    return ' <a href="'.get_the_permalink().'" rel="nofollow">Continue Reading...</a>';
-}
-// add_filter( 'excerpt_more', 'mfsa_filter_excerpt_more_link' );
-
 
 function get_link_to_company_profile($symbol) {
     $getPosts = get_posts(array(
@@ -151,7 +146,7 @@ function mfsa_include_stock_cpt_on_homepage( $query ) {
     }
     return $query;
 }
-add_action( 'pre_get_posts', 'mfsa_include_stock_cpt_on_homepage' );
+// add_action( 'pre_get_posts', 'mfsa_include_stock_cpt_on_homepage' );
 
 
 
