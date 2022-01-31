@@ -5,13 +5,13 @@
 
 /* Site Color Scheme */
 :root {
-    --color-dark-blue: rgb(0, 90, 129);
-    --color-light-blue: rgb(1, 125, 167);
+    --color-dark-blue: #005a81;
+    --color-light-blue: #017da7;
     --color-mid-gray: #e4e4e4;
     --color-light-gray: #f8f8f8;
     --color-black: #222222;
     --color-white: #ffffff;
-    --color-gold: rgb(255, 197, 97);
+    --color-gold: #ffc561;
     --font-body: 'Georgia', 'Cambrai', 'Times New Romain', serif;
     --font-accent: 'Poppins', 'Helvetica', 'Arial', sans-serif;
 }
@@ -233,6 +233,11 @@ article > header {
     margin-right: 1em;
     padding-right: 1em;
     border-right: 1px solid var(--color-mid-gray);
+}
+
+.archive-title {
+    border-bottom: 1px solid var(--color-mid-gray);
+    margin-bottom: 3rem;
 }
 
 /* Company Details Page */

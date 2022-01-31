@@ -4,11 +4,11 @@
 
         <?php if ( is_post_type_archive('stocks') ) { ?>    
 
-            <h1>Stock Recommendations</h1>
+            <h1 class="archive-title">Stock Recommendations</h1>
 
         <?php } else { ?>    
 
-            <h1>Latest News</h1>
+            <h1 class="archive-title">Latest News</h1>
 
         <?php } ?>
 
@@ -34,6 +34,15 @@
                                 <?php echo $author; ?>
                             </a>
                         </span>
+                        
+                        <?php 
+                            if ($postType === 'stocks') {
+                                $exchange = get_post_meta(get_the_ID(), '_mfsa_exchange', true); 
+                                $symbol = get_post_meta(get_the_ID(), '_mfsa_symbol', true); 
+
+                                echo '<strong>' . $exchange . ':' . $symbol . '</strong>';
+                            }
+                        ?>
                     </div>
                 </article>
 
